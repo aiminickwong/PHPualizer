@@ -9,8 +9,10 @@ class Root
 {
     public static function GET(Request $req, Response $res)
     {
+        $config = \PHPualizer\Config::getConfigData();
+
         $res->getBody()->write(json_encode([
-            'title' => \PHPualizer\Config::getConfigData()['title'],
+            'authRequired' => $config['authentication'],
             'version' => \PHPualizer\Config::getVersion()
         ]));
 

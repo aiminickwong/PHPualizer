@@ -1,6 +1,6 @@
 {
-  "title": "PHPualizer",
   "timezone": "America/New_York",
+  "authentication": true,
   "database": {
     "driver": "mysql",
     "host": "localhost",

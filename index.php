@@ -2,7 +2,7 @@
 foreach(explode(',', $_SERVER['HTTP_ACCEPT']) as $accept)
 {
     if($accept == 'text/html') {
-        header('Location: ./panel');
+        header('Location: /panel');
         exit();
     }
 }
