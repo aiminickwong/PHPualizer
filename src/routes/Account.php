@@ -5,7 +5,7 @@ namespace PHPualizer\Routes;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class Root
+class Account
 {
     public static function GET(Request $req, Response $res)
     {
@@ -14,7 +14,7 @@ class Root
             'cache' => 'cache/'
         ]);
 
-        $res->getBody()->write($jade->render('src/templates/index.jade'));
+        $res->getBody()->write($jade->render('src/templates/account.jade'));
 
         return $res;
     }

@@ -17,6 +17,7 @@ class Routes
     public function startRouter()
     {
         $this->app->get('/', function(Request $req, Response $res) { Routes\Root::GET($req, $res); });
+        $this->app->get('/account', function(Request $req, Response $res) { Routes\Account::GET($req, $res); });
         $this->app->get('/update', function(Request $req, Response $res) { Routes\Update::GET($req, $res); });
 
         $this->app->run();

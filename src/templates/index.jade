@@ -1,0 +1,42 @@
+//
+   Created by joshua on 4/15/16.
+
+extends layout
+
+block tabs
+    .ui.container
+        .ui.top.attached.tabular.menu
+            .active.item(data-tab='first')
+                i.cubes.icon
+                |   Dashboard
+            .item(data-tab='second')
+                i.server.icon
+                |   Containers
+            .item(data-tab='third')
+                i.plus.icon
+                |   Deploy
+        .ui.active.bottom.attached.tab.segment(data-tab='first')
+            p Home
+            p
+        .ui.bottom.attached.tab.segment(data-tab='second')
+            .ui.cards
+                .card
+                    .image
+                        img(src='https://www.docker.com/sites/all/themes/docker/assets/images/Logo-Docker.svg')
+                    .content
+                        .header Container Name
+                        .description
+                            |   Container Description
+                    .extra.content
+                        span.right.floated
+                            i.green.arrow.up.icon
+                            |   Container Up/Down Status
+        .ui.bottom.attached.tab.segment(data-tab='third')
+            form.ui.form()
+                .field
+                    label(for='containerName') Container Surrogate Name
+                    input(type='text', id='containerName', name='containerName', placeholder='ContainerName', required)
+                .field
+                    label(for='containerImage') Container Image
+                    input(type='text', id='containerImage', name='containerImage', placeholder='nginx', required)
+                button(class='ui primary button', type='submit') Submit

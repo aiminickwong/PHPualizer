@@ -1,0 +1,40 @@
+//
+   Created by joshua on 4/15/16.
+
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        link(rel='icon', type='image/png', href='/assets/image/logo-small-black.png')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css', integrity='sha384-H79NXIEV9Ys1ey9C9Cki/gYZp+wXsqEjE+N8o7mbgta2Cf4cv/R3mwgWeDp80DEB', crossorigin='anonymous')
+        title PHPualizer
+    body(style='padding-top: 2vh')
+        .ui.visible.left.demo.vertical.inverted.sidebar.labeled.icon.menu
+            a.item(href='/panel')
+                img.ui.image.tiny(src='/assets/image/logo-small.png', draggable='false')
+            a.item(href='/')
+                i.home.icon
+                |   Home
+            a.item(href='/account')
+                i.user.icon
+                |   Account
+        .ui.container(style='padding-bottom: 2vh')
+            img.ui.image.medium(src='/assets/image/logo.png', draggable='false')
+        if account
+            .ui.right.aligned.container(style='padding-bottom: 1vh')
+                h2.ui.header
+                    |   Welcome,&nbsp;
+                    i
+                    |   #{account.username}!
+        block tabs
+        script(src='https://code.jquery.com/jquery-2.2.3.min.js', integrity='sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=', crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js', integrity='sha384-TliAZkItG4hQmzQ3fkO1b36T+hwLupO3uILrCgAR7XSMAgdPEbQFoE0sCUWKqKMh', crossorigin='anonymous')
+        script.
+            $(function () {
+                $(".menu .item").tab();
+                $(".ui .checkbox").checkbox();
+                $(".activating .element").popup();
+            });
+        block scripts

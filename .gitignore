@@ -8,3 +8,9 @@ composer.lock
 
 # IDEA directory
 .idea
+
+# Tasks directory
+.imdone
+
+# Template cache
+cache

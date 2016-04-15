@@ -1,0 +1,21 @@
+//
+   Created by joshua on 4/15/16.
+
+extends layout
+
+block tabs
+    .ui.container
+        .ui.top.attached.tabular.menu
+            .active.item(data-tab='first')
+                i.users.icon
+                |  Profile
+            .item(data-tab='second')
+                i.settings.icon
+                |  Settings
+        .ui.active.bottom.attached.tab.segment(data-tab='first')
+            p Profile
+        .ui.bottom.attached.tab.segment(data-tab='second')
+            form.ui.form
+                .field
+                    label Username
+                    input(type='text', placeholder='test', data-content='You cannot change your username', disabled)
