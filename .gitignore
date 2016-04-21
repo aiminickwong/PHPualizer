@@ -14,3 +14,6 @@ composer.lock
 
 # Template cache
 cache
+
+# Admin stuff
+sqladmin

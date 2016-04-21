@@ -11,14 +11,16 @@ class Routes
     
     public function __construct()
     {
-        $this->app = new \Slim\App;
+        $this->app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
     }
     
     public function startRouter()
     {
         $this->app->get('/', function(Request $req, Response $res) { Routes\Root::GET($req, $res); });
         $this->app->get('/account', function(Request $req, Response $res) { Routes\Account::GET($req, $res); });
-        $this->app->get('/update', function(Request $req, Response $res) { Routes\Update::GET($req, $res); });
+        $this->app->get('/admin', function(Request $req, Response $res) { Routes\Admin::GET($req, $res); });
+        $this->app->get('/modal/{name}', function(Request $req, Response $res) { Routes\Modals::GET($req, $res); });
+        $this->app->get('/post/{name}', function(Request $req, Response $res) { $func = '\PHPualizer\Routes\Posts::' . $req->getAttribute('name'); $func($req, $res); });
 
         $this->app->run();
     }

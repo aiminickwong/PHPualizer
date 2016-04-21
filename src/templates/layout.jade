@@ -12,7 +12,7 @@ html(lang='en')
         title PHPualizer
     body(style='padding-top: 2vh')
         .ui.visible.left.demo.vertical.inverted.sidebar.labeled.icon.menu
-            a.item(href='/panel')
+            a.item(href='/')
                 img.ui.image.tiny(src='/assets/image/logo-small.png', draggable='false')
             a.item(href='/')
                 i.home.icon
@@ -20,21 +20,33 @@ html(lang='en')
             a.item(href='/account')
                 i.user.icon
                 |   Account
+            if isset(account)
+                if account.admin == 1
+                    a.item(href='/admin')
+                        i.browser.icon
+                        |   Admin
         .ui.container(style='padding-bottom: 2vh')
             img.ui.image.medium(src='/assets/image/logo.png', draggable='false')
-        if account
+        if isset(account)
             .ui.right.aligned.container(style='padding-bottom: 1vh')
-                h2.ui.header
-                    |   Welcome,&nbsp;
-                    i
-                    |   #{account.username}!
+                h2.ui.header Welcome,&nbsp;#{account.username}!
+        .ui.container(style='padding-bottom: 1vh')
+            if isset(message)
+                .ui.icon.blue.message
+                    i.alarm.icon
+                    .content
+                        .header Message
+                        p= message
         block tabs
         script(src='https://code.jquery.com/jquery-2.2.3.min.js', integrity='sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=', crossorigin='anonymous')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js', integrity='sha384-TliAZkItG4hQmzQ3fkO1b36T+hwLupO3uILrCgAR7XSMAgdPEbQFoE0sCUWKqKMh', crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.3.0/js/md5.min.js', integrity='sha384-4nR4MIoDCzWhnjSAS4bvXmHdt0y0ZmRs3Yxchjxq+jkqx1jv/GLucxbtq17X6dVa', crossorigin='anonymous')
+        script(src='/assets/javascript/modalHandler.js')
         script.
             $(function () {
                 $(".menu .item").tab();
-                $(".ui .checkbox").checkbox();
+                $(".ui.checkbox").checkbox();
                 $(".activating .element").popup();
+                $('.special.cards .image').dimmer({ on: 'hover' });
             });
         block scripts

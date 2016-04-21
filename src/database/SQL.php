@@ -36,7 +36,7 @@ class SQL
         }
     }
 
-    public function getDocuments(array $filter): array
+    public function getDocuments(array $filter, int $nth = null): array
     {
         $q_length = count($filter);
         $index = 0;

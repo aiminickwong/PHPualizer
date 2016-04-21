@@ -4,18 +4,33 @@
 extends layout
 
 block tabs
-    .ui.container
-        .ui.top.attached.tabular.menu
-            .active.item(data-tab='first')
-                i.users.icon
-                |  Profile
-            .item(data-tab='second')
-                i.settings.icon
-                |  Settings
-        .ui.active.bottom.attached.tab.segment(data-tab='first')
-            p Profile
-        .ui.bottom.attached.tab.segment(data-tab='second')
-            form.ui.form
-                .field
-                    label Username
-                    input(type='text', placeholder='test', data-content='You cannot change your username', disabled)
+    if isset(account)
+        .ui.container
+            .ui.grid
+                .six.wide.column
+                    .ui.special.cards
+                        .card
+                            .blurring.dimmable.image
+                                .ui.dimmer
+                                    .content
+                                        .center
+                                            a.ui.inverted.button(href='https://en.gravatar.com/emails/', target='_blank') Change Image
+                                img(class='image', src='/assets/image/user.png', id='imageAvatar')
+                            .content
+                                a.header
+                                    #{account.firstname}&nbsp;#{account.lastname}
+                                .meta
+                                    span.name= account.username
+                            .extra.content
+                                a
+                                    i.server.icon
+                                    =   account.containercount
+                .ten.wide.column
+                    form.ui.form(action='/post/accountEdit')
+block scripts
+    if isset(account)
+        script.
+            $('#imageAvatar').attr('src', 'https://secure.gravatar.com/avatar/' + md5('#{account.email}') + '?d=identicon&r=pg&s=600');
+    else
+        script.
+            showModal('login', false);

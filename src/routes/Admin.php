@@ -5,7 +5,7 @@ namespace PHPualizer\Routes;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class Account
+class Admin
 {
     public static function GET(Request $req, Response $res)
     {
@@ -16,11 +16,11 @@ class Account
 
 
         if(isset($_SESSION['account'])) {
-            $res->getBody()->write($jade->render('src/templates/account.jade', [
+            $res->getBody()->write($jade->render('src/templates/admin.jade', [
                 'account' => $_SESSION['account']
             ]));
         } else {
-            $res->getBody()->write($jade->render('src/templates/account.jade'));
+            $res->getBody()->write($jade->render('src/templates/admin.jade'));
         }
 
         return $res;

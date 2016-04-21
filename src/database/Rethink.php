@@ -36,9 +36,13 @@ class Rethink
         }
     }
 
-    public function getDocuments(array $filter): array
+    public function getDocuments(array $filter, int $nth = null): array
     {
-        return r\table($this->m_Table)->filter($filter)->run($this->m_Connection);
+        if(is_null($nth)) {
+            return r\table($this->m_Table)->filter($filter)->run($this->m_Connection);
+        } else {
+            return r\table($this->m_Table)->filter($filter)->nth($nth)->run($this->m_Connection);
+        }
     }
 
     public function insertDocuments(array $documents): bool

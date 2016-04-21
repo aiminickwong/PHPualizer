@@ -6,19 +6,13 @@ extends layout
 block tabs
     .ui.container
         .ui.top.attached.tabular.menu
-            .active.item(data-tab='first')
+            .item.active(data-tab='first')
                 i.cubes.icon
-                |   Dashboard
-            .item(data-tab='second')
-                i.server.icon
                 |   Containers
-            .item(data-tab='third')
+            .item(data-tab='second')
                 i.plus.icon
                 |   Deploy
         .ui.active.bottom.attached.tab.segment(data-tab='first')
-            p Home
-            p
-        .ui.bottom.attached.tab.segment(data-tab='second')
             .ui.cards
                 .card
                     .image
@@ -31,12 +25,12 @@ block tabs
                         span.right.floated
                             i.green.arrow.up.icon
                             |   Container Up/Down Status
-        .ui.bottom.attached.tab.segment(data-tab='third')
-            form.ui.form()
+        .ui.bottom.attached.tab.segment(data-tab='second')
+            form.ui.form(method='post', action='/post/createContainer')
                 .field
-                    label(for='containerName') Container Surrogate Name
-                    input(type='text', id='containerName', name='containerName', placeholder='ContainerName', required)
+                    label(for='containerName') Container Name
+                    input#containerName(type='text', name='name', placeholder='MySQL Node 1', required)
                 .field
                     label(for='containerImage') Container Image
-                    input(type='text', id='containerImage', name='containerImage', placeholder='nginx', required)
+                    input#containerImage(type='text', name='image', placeholder='mysql', required)
                 button(class='ui primary button', type='submit') Submit
