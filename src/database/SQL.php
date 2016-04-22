@@ -5,7 +5,7 @@ namespace PHPualizer\Database;
 use \PDO;
 use \PDOException;
 
-use PHPualizer\Config;
+use PHPualizer\Util\Config;
 
 class SQL
 {

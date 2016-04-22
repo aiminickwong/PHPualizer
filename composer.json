@@ -6,6 +6,7 @@
 	"autoload": {
 		"psr-4": {
 			"PHPualizer\\": "src/",
+            "PHPualizer\\Util\\": "src/util",
             "PHPualizer\\Database\\": "src/database/",
             "PHPualizer\\Routes\\": "src/routes/"
 		}
@@ -20,6 +21,6 @@
         "danielmewes/php-rql": "^2.2",
         "slim/slim": "^3.3",
         "docker-php/docker-php": "^1.22",
-        "kylekatarnls/jade-php": "^1.10"
+        "twig/twig": "^1.24"
     }
 }

@@ -1,9 +1,11 @@
 <?php
 require_once 'vendor/autoload.php';
 
-date_default_timezone_set(\PHPualizer\Config::getConfigData()['timezone']);
+date_default_timezone_set(\PHPualizer\Util\Config::getConfigData()['timezone']);
 
-@session_start();
+set_error_handler('\PHPualizer\Util\ErrorHandlers::session');
+session_start();
+restore_error_handler();
 
 $router = new \PHPualizer\Routes;
 $router->startRouter();

@@ -12,9 +12,14 @@ class Posts
         $post = $req->getParsedBody();
 
         if(isset($post['email'])) {
-            
+            if(\PHPualizer\Account::createAccount($post['username'], $post['email'], $post['password'],
+                $post['firstname'], $post['lastname'])) {
+                $_SESSION['message'] = 'The specified account was created successfully, you may now log in';
+            } else {
+                $_SESSION['message'] = 'There was an error saving the account to the database, please try again later';
+            }
         } else {
-            return false;
+            $_SESSION['message'] = 'Could not parse data, form was not sent properly';
         }
     }
 }

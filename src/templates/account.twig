@@ -1,0 +1,54 @@
+{% extends "layout.twig" %}
+{% block content %}
+    {% if account is defined %}
+        <div class="ui container">
+            <div class="ui grid">
+                <div class="six wide column">
+                    <div class="ui special cards">
+                        <div class="card">
+                            <div class="blurring dimmable image">
+                                <div class="ui dimmer">
+                                    <div class="content">
+                                        <div class="center">
+                                            <a href="https://en.gravatar.com/emails/" target="_blank" class="ui inverted button">
+                                                Change Image
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img src="/assets/image/user.png" id="imageAvatar" class="image">
+                            </div>
+                            <div class="content">
+                                <a class="header">
+                                    {{ account.firstname }}&nbsp;{{ account.lastname }}
+                                </a>
+                                <div class="meta">
+                                    <span class="name">
+                                        {{ account.username }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <a>
+                                    <i class="server icon"></i>  {{ account.containercount }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ten wide column">
+                    <form action="/post/accountEdit" class="ui form"></form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block scripts %}
+    <script>
+        {% if account is defined %}
+            $('#imageAvatar').attr('src', 'https://secure.gravatar.com/avatar/' + md5('{{ account.email }}') + '?d=identicon&r=pg&s=600');
+        {% else %}
+            showModal('login', false);
+        {% endif %}
+    </script>
+{% endblock %}

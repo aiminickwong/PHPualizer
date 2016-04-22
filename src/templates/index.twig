@@ -1,0 +1,53 @@
+{% extends "layout.twig" %}
+{% block content %}
+    {% if account is defined %}
+        <div class="ui container">
+            <div class="ui top attached tabular menu">
+                <div data-tab="first" class="item active">
+                    <i class="cubes icon"></i>  Containers
+                </div>
+                <div data-tab="second" class="item">
+                    <i class="plus icon"></i>  Deploy
+                </div>
+            </div>
+            <div data-tab="first" class="ui active bottom attached tab segment">
+                <div class="ui cards">
+                    <div class="card">
+                        <div class="image">
+                            <img src="https://www.docker.com/sites/all/themes/docker/assets/images/Logo-Docker.svg">
+                        </div>
+                        <div class="content">
+                            <div class="header">Container Name</div>
+                            <div class="description">  Container Description</div>
+                        </div>
+                        <div class="extra content">
+                        <span class="right floated">
+                            <i class="green arrow up icon"></i>  Container Up/Down Status
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-tab="second" class="ui bottom attached tab segment">
+                <form method="post" action="/post/createContainer" class="ui form">
+                    <div class="field">
+                        <label for="containerName">Container Name</label>
+                        <input id="containerName" type="text" name="name" placeholder="MySQL Node 1" required>
+                    </div>
+                    <div class="field">
+                        <label for="containerImage">Container Image</label>
+                        <input id="containerImage" type="text" name="image" placeholder="mysql" required>
+                    </div>
+                    <button type="submit" class="ui primary button">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block scripts %}
+    {% if account is not defined %}
+        <script>
+            showModal('login', false);
+        </script>
+    {% endif %}
+{% endblock %}

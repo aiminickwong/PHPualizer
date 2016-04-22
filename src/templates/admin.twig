@@ -1,0 +1,31 @@
+{% extends "layout.twig" %}
+{% block content %}
+    {% if account is defined and account.admin == 1 %}
+        <div class="ui container">
+            <div class="ui grid">
+                <div class="four wide column">
+                    <a href="#" onclick="showModal('adduser')" class="ui basic green button">
+                        Add User
+                    </a>
+                </div>
+                <div class="four wide column">
+                    <a href="#" onclick="showModal('deleteuser')" class="ui basic red button">
+                        Delete User
+                    </a>
+                </div>
+                <div class="four wide column">
+                    <a href="#" onclick="showModal('changepasswordadmin')" class="ui basic green button">
+                        Change User Password
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block scripts %}
+    {% if account is not defined %}
+        <script>
+            showModal('login', false);
+        </script>
+    {% endif %}
+{% endblock %}

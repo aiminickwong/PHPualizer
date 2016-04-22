@@ -9,14 +9,13 @@ class Modals
 {
     public static function GET(Request $req, Response $res)
     {
-        $jade = new \Jade\Jade([
-            'prettyprint' => true,
-            'cache' => 'cache/'
+        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(dirname(__DIR__) . '/templates/modals'), [
+            'cache' => 'cache'
         ]);
 
         $name = $req->getAttribute("name");
 
-        $res->getBody()->write($jade->render("src/templates/modals/$name.jade"));
+        $res->getBody()->write($twig->render("$name.twig"));
 
         return $res;
     }

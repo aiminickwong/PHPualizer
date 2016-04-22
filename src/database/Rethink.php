@@ -4,7 +4,7 @@ namespace PHPualizer\Database;
 
 use \r;
 
-use PHPualizer\Config;
+use PHPualizer\Util\Config;
 
 class Rethink
 {

@@ -1,5 +1,5 @@
 <?php
-namespace PHPualizer;
+namespace PHPualizer\Util;
 
 
 class Config
@@ -8,11 +8,13 @@ class Config
 
     public static function getConfigData(): array
     {
+        $cfg_file = dirname(dirname(__DIR__)) . '/config.json';
+        
         if(isset(self::$m_CfgArray)) {
             return self::$m_CfgArray;
         } else {
-            $f_stream = fopen(dirname(__DIR__) . '/config.json', 'r') or die('Couldn\'t read config file');
-            $cfg_string = fread($f_stream, filesize(dirname(__DIR__) . '/config.json'));
+            $f_stream = fopen($cfg_file, 'r') or die('Couldn\'t read config file');
+            $cfg_string = fread($f_stream, filesize($cfg_file));
             fclose($f_stream);
 
             self::$m_CfgArray = json_decode($cfg_string, true);
@@ -26,8 +28,10 @@ class Config
     
     public static function getVersion(): string
     {
-        $f_stream = fopen(dirname(__DIR__) . '/VERSION', 'r') or die('Couldn\'t load VERSION file!');
-        $version = fread($f_stream, filesize(dirname(__DIR__) . '/VERSION'));
+        $v_file = dirname(dirname(__DIR__)) . '/VERSION';
+        
+        $f_stream = fopen($v_file, 'r') or die('Couldn\'t load VERSION file!');
+        $version = fread($f_stream, filesize($v_file));
         fclose($f_stream);
 
         return $version;

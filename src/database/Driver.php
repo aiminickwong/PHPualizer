@@ -8,7 +8,7 @@ class Driver
 
     public function __construct()
     {
-        switch(\PHPualizer\Config::getConfigData()['database']['driver']) {
+        switch(\PHPualizer\Util\Config::getConfigData()['database']['driver']) {
             case 'mysql':
                 $this->m_Driver = new SQL;
                 break;

@@ -1,0 +1,30 @@
+<div id="adduser" class="ui modal">
+    <div class="header">Create New User</div>
+    <div class="content">
+        <form id="formCreateUser" action="/post/createUser" method="post" class="ui form">
+            <div class="field">
+                <label for="username">Username</label>
+                <input id="username" type="text" name="username" placeholder="exampleuser123" required="required"/>
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" placeholder="user@example.com" required="required"/>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" placeholder="password" required="required"/>
+            </div>
+            <div class="field">
+                <label for="firstname">First Name</label>
+                <input id="firstname" type="text" name="firstname" placeholder="Example" required="required"/>
+            </div>
+            <div class="field">
+                <label for="lastname">Last Name</label>
+                <input id="lastname" type="text" name="lastname" placeholder="User" required="required"/>
+            </div>
+            <button type="submit" class="ui positive labeled icon button">
+                Create User  <i class="checkmark icon"></i>
+            </button>
+        </form>
+    </div>
+</div>

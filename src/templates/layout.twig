@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/image/logo-small-black.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css" integrity="sha384-H79NXIEV9Ys1ey9C9Cki/gYZp+wXsqEjE+N8o7mbgta2Cf4cv/R3mwgWeDp80DEB" crossorigin="anonymous">
+    <title>PHPualizer</title>
+</head>
+<body style="padding-top: 2vh">
+<div class="ui visible left demo vertical inverted sidebar labeled icon menu">
+    <a href="/" class="item">
+        <img src="/assets/image/logo-small.png" draggable="false" class="ui image tiny">
+    </a>
+    <a href="/" class="item">
+        <i class="home icon"></i>  Home
+    </a>
+    <a href="/account" class="item">
+        <i class="user icon"></i>  Account
+    </a>
+    {% if account is defined and account.admin == 1 %}
+        <a href="/admin" class="item">
+            <i class="browser icon"></i>  Admin
+        </a>
+    {% endif %}
+</div>
+<div style="padding-bottom: 2vh" class="ui container">
+    <img src="/assets/image/logo.png" draggable="false" class="ui image medium">
+</div>
+{% if account is defined %}
+    <div style="padding-bottom: 1vh" class="ui right aligned container">
+        <h2 class="ui header">Welcome,&nbsp;{{ account.firstname }}&nbsp;{{ account.lastname }}!</h2>
+    </div>
+{% endif %}
+{% if message is defined %}
+    <div style="padding-bottom: 1vh" class="ui container">
+        <div class="ui icon blue message">
+            <i class="alarm icon"></i>
+            <div class="content">
+                <div class="header">
+                    Message
+                </div>
+                <p>
+                    {{ message }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% block content %}
+{% endblock %}
+<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js" integrity="sha384-TliAZkItG4hQmzQ3fkO1b36T+hwLupO3uILrCgAR7XSMAgdPEbQFoE0sCUWKqKMh" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.3.0/js/md5.min.js" integrity="sha384-4nR4MIoDCzWhnjSAS4bvXmHdt0y0ZmRs3Yxchjxq+jkqx1jv/GLucxbtq17X6dVa" crossorigin="anonymous"></script>
+<script src="/assets/javascript/modalHandler.js"></script>
+<script>
+    $(function () {
+        $(".menu .item").tab();
+        $(".ui.checkbox").checkbox();
+        $(".activating .element").popup();
+        $('.special.cards .image').dimmer({ on: 'hover' });
+    });
+</script>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

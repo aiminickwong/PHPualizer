@@ -16,12 +16,12 @@ class Account
             return false;
         } else {
             return $db->insertDocuments([
-                'username' => $username,
-                'email' => $email,
+                'username' => filter_var($username, \FILTER_SANITIZE_STRING),
+                'email' => filter_var($email, \FILTER_SANITIZE_EMAIL),
                 'password' => password_hash("$email:$password:$lastname", \PASSWORD_BCRYPT),
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'admin' => $admin
+                'firstname' => filter_var($firstname, \FILTER_SANITIZE_STRING),
+                'lastname' => filter_var($lastname, \FILTER_SANITIZE_STRING),
+                'admin' => filter_var($admin, \FILTER_SANITIZE_NUMBER_INT)
             ]);
         }
     }
@@ -61,6 +61,8 @@ class Account
     
     public static function logout()
     {
-        @session_destroy();
+        set_error_handler('\PHPualizer\Util\ErrorHandlers::session');
+        session_destroy();
+        restore_error_handler();
     }
 }

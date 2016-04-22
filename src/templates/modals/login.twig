@@ -1,0 +1,27 @@
+<div id="login" class="ui modal">
+    <div class="header">
+        Login
+    </div>
+    <div class="content">
+        <div class="ui icon red message">
+            <i class="alarm icon"></i>
+            <div class="content">
+                <div class="header">Private Page</div>
+                <p>You must log in to view this page.</p>
+            </div>
+        </div>
+        <form id="formLogin" action="/post/loginUser" method="post" class="ui form">
+            <div class="field">
+                <label for="username">Username or Email</label>
+                <input id="username" type="text" name="username" placeholder="user@example.com" required="required">
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" placeholder="password" required="required">
+            </div>
+            <button type="submit" class="ui positive labeled icon button">
+                Log In  <i class="checkmark icon"></i>
+            </button>
+        </form>
+    </div>
+</div>
