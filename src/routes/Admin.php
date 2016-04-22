@@ -9,18 +9,17 @@ class Admin
 {
     public static function GET(Request $req, Response $res)
     {
-        $jade = new \Jade\Jade([
-            'prettyprint' => true,
-            'cache' => 'cache/'
+        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(dirname(__DIR__) . '/templates'), [
+            'cache' => 'cache'
         ]);
 
 
         if(isset($_SESSION['account'])) {
-            $res->getBody()->write($jade->render('src/templates/admin.jade', [
+            $res->getBody()->write($twig->render('admin.twig', [
                 'account' => $_SESSION['account']
             ]));
         } else {
-            $res->getBody()->write($jade->render('src/templates/admin.jade'));
+            $res->getBody()->write($twig->render('admin.twig'));
         }
 
         return $res;
