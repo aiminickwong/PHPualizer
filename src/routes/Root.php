@@ -14,7 +14,7 @@ class Root
             'cache' => 'cache'
         ]);
 
-        if($_SESSION['message'] != null) {
+        if(isset($_SESSION['message']) && $_SESSION['message'] != null) {
             $res->getBody()->write($twig->render('index.twig', ['message' => $_SESSION['message']]));
 
             // Reset variables in session to avoid showing messages twice

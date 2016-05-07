@@ -10,11 +10,13 @@ class Account
     {
         $db = new Driver;
         $db = $db->getDriver();
-        $db->setTable('users');
+        $db->setTable('users_test');
 
-        if (!empty($db->getDocuments(['username' => $username]))) {
-            return false;
-        } else {
+//        die(var_dump($db->getDocuments(['username' => 'Wargog'])));
+
+//        if(!empty($db->getDocuments(['username' => $username]))) {
+//            return false;
+//        } else {
             return $db->insertDocuments([
                 'username' => filter_var($username, \FILTER_SANITIZE_STRING),
                 'email' => filter_var($email, \FILTER_SANITIZE_EMAIL),
@@ -23,7 +25,7 @@ class Account
                 'lastname' => filter_var($lastname, \FILTER_SANITIZE_STRING),
                 'admin' => filter_var($admin, \FILTER_SANITIZE_NUMBER_INT)
             ]);
-        }
+//        }
     }
 
     public static function login(string $usernameoremail, string $password): bool

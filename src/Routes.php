@@ -20,7 +20,7 @@ class Routes
         $this->app->get('/account', function(Request $req, Response $res) { Routes\Account::GET($req, $res); });
         $this->app->get('/admin', function(Request $req, Response $res) { Routes\Admin::GET($req, $res); });
         $this->app->get('/modal/{name}', function(Request $req, Response $res) { Routes\Modals::GET($req, $res); });
-        $this->app->get('/post/{name}', function(Request $req, Response $res) { $func = '\PHPualizer\Routes\Posts::' . $req->getAttribute('name'); $func($req, $res); });
+        $this->app->post('/post/{name}', function(Request $req, Response $res) { $func = '\PHPualizer\Routes\Posts::' . $req->getAttribute('name'); $func($req, $res); });
 
         $this->app->run();
     }

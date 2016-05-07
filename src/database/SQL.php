@@ -6,6 +6,7 @@ use \PDO;
 use \PDOException;
 
 use PHPualizer\Util\Config;
+use Psr\Log\InvalidArgumentException;
 
 class SQL
 {
@@ -28,8 +29,13 @@ class SQL
 
         if(!isset($this->m_PDO)) {
             try {
-                $this->m_PDO = new PDO('mysql:dbname=' . $sql_config["db"] . ';host=' . $sql_config["host"] . ';port=' . $sql_config["port"],
-                    $sql_config['user'], $sql_config['password']);
+                if(isset($sql_config['password']) && $sql_config['password'] != '') {
+                    $this->m_PDO = new PDO('mysql:dbname=' . $sql_config["db"] . ';host=' . $sql_config["host"] . ';port=' . $sql_config["port"],
+                        $sql_config['user'], $sql_config['password']);
+                } else {
+                    $this->m_PDO = new PDO('mysql:dbname=' . $sql_config["db"] . ';host=' . $sql_config["host"] . ';port=' . $sql_config["port"],
+                        $sql_config['user']);
+                }
             } catch(PDOException $e) {
                 throw new \InvalidArgumentException($e->getMessage());
             }
@@ -50,6 +56,8 @@ class SQL
             
             $index++;
         }
+
+        $qs .= ';';
 
         $query = $this->m_PDO->prepare($qs);
 
@@ -78,7 +86,7 @@ class SQL
         }
         
         $index = 0;
-        $qs .= ') VALUES(';
+        $qs .= ') VALUES (';
         
         foreach($documents as $key => $val) {
             if($index < $s_length && $index > 0)
@@ -89,7 +97,9 @@ class SQL
             $index++;
         }
 
-        $query = $this->m_PDO->prepare($qs . ')');
+        $qs .= ');';
+
+        $query = $this->m_PDO->prepare($qs);
 
         foreach($documents as $key => $val) {
             $query->bindValue(":$key", $val);
@@ -125,6 +135,8 @@ class SQL
 
             $index++;
         }
+
+        $qs .= ';';
 
         $query = $this->m_PDO->prepare($qs);
 

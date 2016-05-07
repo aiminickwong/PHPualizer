@@ -9,7 +9,7 @@ class Posts
 {
     public static function createUser(Request $req, Response $res)
     {
-        $post = $req->getParsedBody();
+        $post = $req->getParams();
 
         if(isset($post['email'])) {
             if(\PHPualizer\Account::createAccount($post['username'], $post['email'], $post['password'],
