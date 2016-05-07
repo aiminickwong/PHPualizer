@@ -7,6 +7,7 @@ use Slim\Http\Response;
 
 class Modals
 {
+    // TODO: Upgrade security for modals so certain modals are admin only
     public static function GET(Request $req, Response $res)
     {
         $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(dirname(__DIR__) . '/templates/modals'), [

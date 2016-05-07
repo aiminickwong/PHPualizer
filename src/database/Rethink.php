@@ -10,6 +10,7 @@ class Rethink
 {
     private $m_Connection;
     private $m_Table;
+    private $m_Config;
 
     public function getTable(): string
     {
@@ -26,12 +27,12 @@ class Rethink
 
     public function __construct()
     {
-        $r_config = Config::getConfigData()['database'];
+        $this->m_Config = Config::getConfigData()['database'];
 
         if(!isset($this->m_Connection)) {
-            $this->m_Connection = r\connect($r_config);
+            $this->m_Connection = r\connect($this->m_Config);
 
-            if(!$this->createDatabaseIfNotExists($r_config['db']))
+            if(!$this->createDatabaseIfNotExists($this->m_Config['db']))
                 throw new \InvalidArgumentException;
         }
     }
@@ -39,22 +40,22 @@ class Rethink
     public function getDocuments(array $filter, int $nth = null): array
     {
         if(is_null($nth)) {
-            return r\table($this->m_Table)->filter($filter)->run($this->m_Connection);
+            return (array)r\table($this->m_Table)->filter($filter)->run($this->m_Connection);
         } else {
-            return r\table($this->m_Table)->filter($filter)->nth($nth)->run($this->m_Connection);
+            return (array)r\table($this->m_Table)->filter($filter)->nth($nth)->run($this->m_Connection);
         }
     }
 
     public function insertDocuments(array $documents): bool
     {
         $insert = r\table($this->m_Table)->insert($documents)->run($this->m_Connection);
-        return ($insert['created'] >= 1 || $insert['inserted'] >= 1 || $insert['updated'] >= 1) ? true : false;
+        return ($insert->inserted >= 1 || $insert->replaced >= 1) ? true : false;
     }
 
     public function updateDocuments(array $documents, array $filter): bool
     {
         $update = r\table($this->m_Table)->filter($filter)->update($documents)->run($this->m_Connection);
-        return ($update['created'] >= 1 || $update['inserted'] >= 1 || $update['updated'] >= 1) ? true : false;
+        return ($update->inserted >= 1 || $update->replaced >= 1) ? true : false;
     }
 
     private function createTableIfNotExists(string $tableName): bool

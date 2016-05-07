@@ -2,9 +2,9 @@
   "timezone": "America/New_York",
   "authentication": true,
   "database": {
-    "driver": "mysql",
+    "driver": "rethinkdb",
     "host": "localhost",
-    "port": 3306,
+    "port": 28015,
     "user": "root",
     "password": "",
     "db": "phpualizer"

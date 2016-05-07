@@ -15,12 +15,27 @@ class Root
         ]);
 
         if(isset($_SESSION['message']) && $_SESSION['message'] != null) {
-            $res->getBody()->write($twig->render('index.twig', ['message' => $_SESSION['message']]));
+            if(isset($_SESSION['account']) && $_SESSION['account']['username'] != null) {
+                $res->getBody()->write($twig->render('index.twig', [
+                    'message' => $_SESSION['message'],
+                    'account' => $_SESSION['account']
+                ]));
+            } else {
+                $res->getBody()->write($twig->render('index.twig', [
+                    'message' => $_SESSION['message']
+                ]));
+            }
 
             // Reset variables in session to avoid showing messages twice
             $_SESSION['message'] = null;
         } else {
-            $res->getBody()->write($twig->render('index.twig'));
+            if(isset($_SESSION['account']) && $_SESSION['account']['username'] != null) {
+                $res->getBody()->write($twig->render('index.twig', [
+                    'account' => $_SESSION['account']
+                ]));
+            } else {
+                $res->getBody()->write($twig->render('index.twig'));
+            }
         }
 
         return $res;

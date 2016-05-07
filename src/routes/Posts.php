@@ -21,5 +21,24 @@ class Posts
         } else {
             $_SESSION['message'] = 'Could not parse data, form was not sent properly';
         }
+
+//        $res->getBody()->write('<meta http-equiv="refresh" content="0;url=/">');
+    }
+    
+    public static function loginUser(Request $req, Response $res)
+    {
+        $post = $req->getParams();
+        
+        if(isset($post['username'])) {
+            if(\PHPualizer\Account::login($post['username'], $post['password'])) {
+                $_SESSION['message'] = 'The specified account was logged in successfully';
+            } else {
+                $_SESSION['message'] = 'There was an error logging in, do you have an account?';
+            }
+        } else {
+            $_SESSION['message'] = 'Could not parse data, form was not sent properly';
+        }
+
+        $res->getBody()->write('<meta http-equiv="refresh" content="0;url=/">');
     }
 }

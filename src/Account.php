@@ -10,35 +10,55 @@ class Account
     {
         $db = new Driver;
         $db = $db->getDriver();
-        $db->setTable('users_test');
+        $db->setTable('users');
 
-//        die(var_dump($db->getDocuments(['username' => 'Wargog'])));
+        // Sanitize and lowercase variables
+        $username = strtolower(filter_var($username, \FILTER_SANITIZE_STRING));
+        $email = strtolower(filter_var($email, \FILTER_SANITIZE_EMAIL));
+        $password = filter_var($password, \FILTER_SANITIZE_SPECIAL_CHARS);
+        $firstname = filter_var($firstname, \FILTER_SANITIZE_STRING);
+        $lastname = filter_var($lastname, \FILTER_SANITIZE_STRING);
+        $admin = filter_var($admin, \FILTER_SANITIZE_NUMBER_INT);
 
-//        if(!empty($db->getDocuments(['username' => $username]))) {
-//            return false;
-//        } else {
-            return $db->insertDocuments([
-                'username' => filter_var($username, \FILTER_SANITIZE_STRING),
-                'email' => filter_var($email, \FILTER_SANITIZE_EMAIL),
-                'password' => password_hash("$email:$password:$lastname", \PASSWORD_BCRYPT),
-                'firstname' => filter_var($firstname, \FILTER_SANITIZE_STRING),
-                'lastname' => filter_var($lastname, \FILTER_SANITIZE_STRING),
-                'admin' => filter_var($admin, \FILTER_SANITIZE_NUMBER_INT)
-            ]);
-//        }
+        $checkusernameindb = $db->getDocuments(['username' => $username]);
+        $checkemailindb = $db->getDocuments(['email' => $email]);
+        die(var_dump($checkusernameindb) . '<br>' . var_dump($checkemailindb));
+
+        if(isset($checkusernameindb['username'])) {
+            return false;
+        } else {
+            if(isset($checkemailindb['email'])) {
+                return false;
+            } else {
+                return $db->insertDocuments([
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => password_hash("$email:$password:$lastname", \PASSWORD_BCRYPT),
+                    'first_name' => $firstname,
+                    'last_name' => $lastname,
+                    'admin' => $admin
+                ]);
+            }
+        }
     }
 
     public static function login(string $usernameoremail, string $password): bool
     {
+        $usernameoremail = strtolower($usernameoremail);
+        $password = filter_var($password, \FILTER_SANITIZE_SPECIAL_CHARS);
+
         $db = new Driver;
         $db = $db->getDriver();
         $db->setTable('users');
 
-        if(strpos($usernameoremail, '@') !== false) {
-            $account = $db->getDocuments(['username' => $usernameoremail], 0);
-            if(isset($account['username'])) {
-                if(password_verify($account['email'] . ':' . $password . ':' . $account['lastname'], $account['password'])) {
+        if(strpos($usernameoremail, '@') === false) {
+            $account = $db->getDocuments(['username' => filter_var($usernameoremail, \FILTER_SANITIZE_STRING)], 0);
+            if(isset($account['email'])) {
+                if(password_verify($account['email'] . ':' . $password . ':' . $account['last_name'], $account['password'])) {
+                    // Don't flop around user's password hash in session
+                    unset($account['password']);
                     $_SESSION['account'] = $account;
+
                     return true;
                 } else {
                     return false;
@@ -47,10 +67,12 @@ class Account
                 return false;
             }
         } else {
-            $account = $db->getDocuments(['email' => $usernameoremail], 0);
+            $account = $db->getDocuments(['email' => filter_var($usernameoremail, \FILTER_SANITIZE_EMAIL)], 0);
             if(isset($account['email'])) {
-                if(password_verify($account['email'] . ':' . $password . ':' . $account['lastname'], $account['password'])) {
+                if(password_verify($account['email'] . ':' . $password . ':' . $account['last_name'], $account['password'])) {
+                    unset($account['password']);
                     $_SESSION['account'] = $account;
+
                     return true;
                 } else {
                     return false;
@@ -61,10 +83,14 @@ class Account
         }
     }
     
-    public static function logout()
+    public static function logout(): bool
     {
-        set_error_handler('\PHPualizer\Util\ErrorHandlers::session');
-        session_destroy();
-        restore_error_handler();
+        if(isset($_SESSION['account'])) {
+            unset($_SESSION['account']);
+            
+            return true;
+        } else {
+            return false;
+        }
     }
 }

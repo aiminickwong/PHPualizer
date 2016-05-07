@@ -12,6 +12,7 @@ class SQL
 {
     private $m_PDO;
     private $m_Table;
+    private $m_Config;
 
     public function getTable(): string
     {
@@ -25,16 +26,16 @@ class SQL
 
     public function __construct()
     {
-        $sql_config = Config::getConfigData()['database'];
+        $this->m_Config = Config::getConfigData()['database'];
 
         if(!isset($this->m_PDO)) {
             try {
-                if(isset($sql_config['password']) && $sql_config['password'] != '') {
-                    $this->m_PDO = new PDO('mysql:dbname=' . $sql_config["db"] . ';host=' . $sql_config["host"] . ';port=' . $sql_config["port"],
-                        $sql_config['user'], $sql_config['password']);
+                if(isset($this->m_Config['password']) && $this->m_Config['password'] != '') {
+                    $this->m_PDO = new PDO('mysql:dbname=' . $this->m_Config["db"] . ';host=' . $this->m_Config["host"] . ';port=' . $this->m_Config["port"],
+                        $this->m_Config['user'], $this->m_Config['password']);
                 } else {
-                    $this->m_PDO = new PDO('mysql:dbname=' . $sql_config["db"] . ';host=' . $sql_config["host"] . ';port=' . $sql_config["port"],
-                        $sql_config['user']);
+                    $this->m_PDO = new PDO('mysql:dbname=' . $this->m_Config["db"] . ';host=' . $this->m_Config["host"] . ';port=' . $this->m_Config["port"],
+                        $this->m_Config['user']);
                 }
             } catch(PDOException $e) {
                 throw new \InvalidArgumentException($e->getMessage());

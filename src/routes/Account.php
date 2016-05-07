@@ -24,4 +24,15 @@ class Account
 
         return $res;
     }
+    
+    public static function LOGOUT(Request $req, Response $res)
+    {
+        if(\PHPualizer\Account::logout()) {
+            $_SESSION['message'] = 'User logged out successfully';
+        } else {
+            $_SESSION['message'] = 'An unknown error has occurred, and the user has not been logged out';
+        }
+
+        $res->getBody()->write('<meta http-equiv="refresh" content="0;url=/">');
+    }
 }

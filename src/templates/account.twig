@@ -20,7 +20,7 @@
                             </div>
                             <div class="content">
                                 <a class="header">
-                                    {{ account.firstname }}&nbsp;{{ account.lastname }}
+                                    {{ account.first_name }}&nbsp;{{ account.last_name }}
                                 </a>
                                 <div class="meta">
                                     <span class="name">
@@ -37,6 +37,9 @@
                     </div>
                 </div>
                 <div class="ten wide column">
+                    <a href="/account/logout" class="ui basic black button">
+                        Logout
+                    </a>
                     <form action="/post/accountEdit" class="ui form"></form>
                 </div>
             </div>

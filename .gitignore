@@ -17,3 +17,6 @@ cache
 
 # Admin stuff
 sqladmin
+
+# Config file
+config.json
