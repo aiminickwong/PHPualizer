@@ -12,17 +12,14 @@ class Posts
         $post = $req->getParams();
 
         if(isset($post['email'])) {
-            if(\PHPualizer\Account::createAccount($post['username'], $post['email'], $post['password'],
-                $post['firstname'], $post['lastname'])) {
+            if(\PHPualizer\Account::createAccount($post['username'], $post['email'], $post['password'], $post['firstname'], $post['lastname'])) {
                 $_SESSION['message'] = 'The specified account was created successfully, you may now log in';
-            } else {
-                $_SESSION['message'] = 'There was an error saving the account to the database, please try again later';
             }
         } else {
             $_SESSION['message'] = 'Could not parse data, form was not sent properly';
         }
 
-//        $res->getBody()->write('<meta http-equiv="refresh" content="0;url=/">');
+        $res->getBody()->write('<meta http-equiv="refresh" content="0;url=/">');
     }
     
     public static function loginUser(Request $req, Response $res)

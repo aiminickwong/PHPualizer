@@ -71,6 +71,32 @@ class SQL
         return (array)$query->fetchObject();
     }
 
+    public function deleteDocuments(array $filter): bool
+    {
+        $q_length = count($filter);
+        $index = 0;
+        $qs = 'DELETE FROM ' . $this->m_Table . ' WHERE ';
+
+        foreach($filter as $key => $val) {
+            if($index < $q_length && $index > 0)
+                $qs .= ' AND ';
+
+            $qs .= "`$key`" . '=:' . $key;
+
+            $index++;
+        }
+
+        $qs .= ';';
+
+        $query = $this->m_PDO->prepare($qs);
+
+        foreach($filter as $key => $val) {
+            $query->bindValue(":$key", $val);
+        }
+
+        $query->execute();
+    }
+
     public function insertDocuments(array $documents): bool
     {
         $s_length = count($documents);

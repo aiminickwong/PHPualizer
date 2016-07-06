@@ -22,12 +22,13 @@ class Account
 
         $checkusernameindb = $db->getDocuments(['username' => $username]);
         $checkemailindb = $db->getDocuments(['email' => $email]);
-        die(var_dump($checkusernameindb) . '<br>' . var_dump($checkemailindb));
 
-        if(isset($checkusernameindb['username'])) {
+        if(isset($checkusernameindb[0]['username'])) {
+            $_SESSION['message'] = 'An account already exists with the specified username';
             return false;
         } else {
-            if(isset($checkemailindb['email'])) {
+            if(isset($checkemailindb[0]['email'])) {
+                $_SESSION['message'] = 'An account already exists with the specified email';
                 return false;
             } else {
                 return $db->insertDocuments([
@@ -40,6 +41,11 @@ class Account
                 ]);
             }
         }
+    }
+    
+    public static function deleteAccount(string $usernameoremail): bool
+    {
+        
     }
 
     public static function login(string $usernameoremail, string $password): bool

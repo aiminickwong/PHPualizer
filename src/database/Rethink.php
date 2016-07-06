@@ -40,10 +40,15 @@ class Rethink
     public function getDocuments(array $filter, int $nth = null): array
     {
         if(is_null($nth)) {
-            return (array)r\table($this->m_Table)->filter($filter)->run($this->m_Connection);
+            return r\table($this->m_Table)->filter($filter)->run($this->m_Connection)->toArray();
         } else {
             return (array)r\table($this->m_Table)->filter($filter)->nth($nth)->run($this->m_Connection);
         }
+    }
+
+    public function deleteDocuments(array $filter): bool
+    {
+        return (r\table($this->m_Table)->filter($filter)->delete()->run($this->m_Connection)->deleted >= 1) ? true : false;
     }
 
     public function insertDocuments(array $documents): bool
